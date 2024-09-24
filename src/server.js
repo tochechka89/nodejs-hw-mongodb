@@ -3,8 +3,8 @@ import cors from "cors";
 
 import { env } from "./utils/env.js";
 
-import notFoundHandleer from "./middlewares/notFoundHandler.js";
-import errorHandleer from "./middlewares/errorHandler.js";
+import notFoundHandler from "./middlewares/notFoundHandler.js";
+import errorHandler from "./middlewares/errorHandler.js";
 import logger from "./middlewares/logger.js";
 
 import contactsRouter from "./routers/contacts.js";
@@ -18,9 +18,9 @@ export const setupServer = () => {
 
     app.use("/contacts", contactsRouter);
 
-    app.use(notFoundHandleer);
+    app.use(notFoundHandler);
 
-    app.use(errorHandleer);
+    app.use(errorHandler);
 
     const port = Number(env("PORT", 3000));
 

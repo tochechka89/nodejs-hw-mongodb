@@ -1,7 +1,7 @@
-const notFoundHandleer = (req, res) => {
+const notFoundHandler = (req, res) => {
     res.status(404).json({
         message: "Route not found",
     });
 };
 
-export default notFoundHandleer;
+export default notFoundHandler;
