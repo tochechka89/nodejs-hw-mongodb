@@ -1,21 +1,22 @@
 import createHttpError from "http-errors";
 
-export const errorHandler = (err, req, res, next) => {
-    
-    if (err instanceof createHttpError.HttpError) {
-        res.status(err.status).json({
-            status: err.status,
-            message: err.message,
-            data: err.data || null, 
-        });
-    } else {
-       
-        res.status(500).json({
-            status: 500,
-            message: "Something went wrong",
-            data: null,
-        });
-    }
+const errorHandler = (error, req, res, next) => {
+  if (error instanceof createHttpError) {
+    return res.status(error.status).json({
+      status: error.status,
+      message: error.message,
+      data: error.expose ? error.message : "An error occurred",
+    });
+  }
+
+  const status = error.status || 500;
+  const message = error.message || "Something went wrong";
+
+  res.status(status).json({
+    status,
+    message: "Something went wrong",
+    data: message,
+  });
 };
 
 export default errorHandler;
