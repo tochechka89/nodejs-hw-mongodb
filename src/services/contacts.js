@@ -21,4 +21,12 @@ export const updateContact = async (filter, data, options = {}) => {
     };
 };
 
-export const deleteContact = filter => ContactCollection.findOneAndDelete(filter);
+export const deleteContact = async (filter) => {
+    const result = await ContactCollection.deleteOne(filter);
+
+    if (result.deletedCount === 0) {
+        return null;
+    }
+
+    return result;
+};
