@@ -1,7 +1,6 @@
 import ContactCollection from "../db/models/Contact.js";
 
 import calculatePaginationData from "../utils/calculatePaginationData.js";
-import parseContactFilterParams from "../utils/filters/parseContactFilterParams.js";
 
 import { SORT_ORDER } from "../constants/index.js";
 
