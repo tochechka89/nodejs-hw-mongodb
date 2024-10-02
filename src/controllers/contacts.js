@@ -33,7 +33,7 @@ export const getAllContactsController = async (req, res) => {
 export const getContactByIdController = async (req, res) => {
     const { id } = req.params;
      const { _id: userId } = req.user;
-    const data = await contactCollections.getContactById({ _id: id, userId });
+    const data = await contactCollections.getContact({ _id: id, userId });
 
     if (!data) {
         throw createHttpError(404, `Movie with id=${id} not found`);

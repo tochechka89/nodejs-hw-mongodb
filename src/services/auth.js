@@ -23,8 +23,8 @@ const createSession = () => {
 };
 
 export const register = async (payload) => {
-    const { name, email, password } = payload;
-    const user = await UserCollection.findOne({ name, email });
+    const { email, password } = payload;
+    const user = await UserCollection.findOne({ email });
     if (user) {
         throw createHttpError(409, "Email already exist");
     }
@@ -61,9 +61,14 @@ export const login = async (payload) => {
     return userSession;
 };
 
-export const findSessionByAccessToken = accessToken => SessionCollection.findOne({accessToken});
+export const findSessionByAccessToken = (accessToken) => SessionCollection.findOne({accessToken});
 
 export const refreshSession = async({ refreshToken, sessionId }) => {
+    
+    if (!refreshToken || !sessionId) {
+        throw createHttpError(400, "Refresh token or session ID missing");
+      }
+
     const oldSession = await SessionCollection.findOne ({
         _id: sessionId,
         refreshToken,
