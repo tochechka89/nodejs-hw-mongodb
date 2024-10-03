@@ -3,23 +3,31 @@ import * as authServices from "../services/auth.js";
 const setupSession = (res, session) => {
       res.cookie("refreshToken", session.refreshToken, {
         httpOnly: true,
-        expire: new Date(Date.now() + session.refreshTokenValidUntil),
+        expires: new Date(Date.now() + session.refreshTokenValidUntil),
     });
 
     res.cookie("sessionId", session._id, {
         httpOnly: true,
-        expire: new Date(Date.now() + session.refreshTokenValidUntil),
+        expires: new Date(Date.now() + session.refreshTokenValidUntil),
     });
 };
 
 export const registerController = async (req, res) => {
-    const newUser = await authServices.register(req.body);
-    res.status(201).json({
-        status: 201,
-        message: "Succsessfully register user",
-        data: newUser,
-    });
+    try {
+        const newUser = await authServices.register(req.body);
+        res.status(201).json({
+            status: 201,
+            message: "Successfully registered user",
+            data: newUser,
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 400,
+            message: error.message || "Error registering user",
+        });
+    }
 };
+
     export const loginController = async (req, res) => {
         const session = await authServices.login(req.body);
 
@@ -36,7 +44,7 @@ export const registerController = async (req, res) => {
 };
 
 export const refreshController = async (req, res) => {
-    const { refreshToken, sessionId } = req.cookie;
+    const { refreshToken, sessionId } = req.cookies;
     const session = await authServices.refreshSession({ refreshToken, sessionId });
 
     setupSession(res, session);
@@ -56,8 +64,8 @@ export const logoutController = async (req, res) => {
         await authServices.logout(sessionId);
     }
 
-    res.clearCookie("sessionId");
-    res.clearCookie("refreshToken");
+    res.clearCookie("sessionId", { httpOnly: true, secure: true });
+    res.clearCookie("refreshToken", { httpOnly: true, secure: true });
 
     res.status(204).send();
 };
