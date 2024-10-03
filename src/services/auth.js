@@ -6,13 +6,13 @@ import { randomBytes } from "crypto";
 import SessionCollection from "../db/models/Session.js";
 import UserCollection from "../db/models/User.js";
 
-import { accessTokenLifeeTime, refreshTokenLifetime } from "../constants/users.js";
+import { accessTokenLifeTime, refreshTokenLifeTime } from "../constants/users.js";
 
 const createSession = () => {
     const accessToken = randomBytes(30).toString("base64");
     const refreshToken = randomBytes(30).toString("base64");
-    const accessTokenValidUntil = new Date(Date.now() + accessTokenLifeeTime);
-    const refreshTokenValidUntil = new Date(Date.now() + refreshTokenLifetime);
+    const accessTokenValidUntil = new Date(Date.now() + accessTokenLifeTime);
+    const refreshTokenValidUntil = new Date(Date.now() + refreshTokenLifeTime);
 
     return {
         accessToken,
@@ -61,13 +61,9 @@ export const login = async (payload) => {
     return userSession;
 };
 
-export const findSessionByAccessToken = (accessToken) => SessionCollection.findOne({accessToken});
+export const findSessionByAccessToken = accessToken => SessionCollection.findOne({accessToken});
 
 export const refreshSession = async({ refreshToken, sessionId }) => {
-    
-    if (!refreshToken || !sessionId) {
-        throw createHttpError(400, "Refresh token or session ID missing");
-      }
 
     const oldSession = await SessionCollection.findOne ({
         _id: sessionId,

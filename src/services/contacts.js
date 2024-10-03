@@ -4,7 +4,7 @@ import calculatePaginationData from "../utils/calculatePaginationData.js";
 
 import { SORT_ORDER } from "../constants/index.js";
 
-export const getContacts = async ({ perPage, page, sortBy = "_id", sortOrder = SORT_ORDER[0],filter ={} }) => {
+export const getContacts = async ({ perPage, page, sortBy = "_id", sortOrder = SORT_ORDER[0],filter ={}, }) => {
     const skip = (page - 1) * perPage;
 
      let contactQuery = ContactCollection.find();
@@ -36,13 +36,12 @@ export const getContacts = async ({ perPage, page, sortBy = "_id", sortOrder = S
 };
    
 
-export const getContact = (filter) => ContactCollection.findOne(filter);
+export const getContact = filter => ContactCollection.findById(filter);
 
-export const createContact = (payload) => ContactCollection.create(payload);
+export const createContact = payload => ContactCollection.create(payload);
 
 export const updateContact = async (filter, data, options = {}) => {
     const rawResult = await ContactCollection.findOneAndUpdate(filter, data, {
-        new: true,
         includeResultMetadata: true,
         ...options,
     });
@@ -55,12 +54,6 @@ export const updateContact = async (filter, data, options = {}) => {
     };
 };
 
-export const deleteContact = async (filter) => {
-    const result = await ContactCollection.deleteOne(filter);
+export const deleteContact = filter => ContactCollection.findOneAndDelete(filter);
 
-    if (result.deletedCount === 0) {
-        return null;
-    }
-
-    return result;
-};
+   
