@@ -17,7 +17,7 @@ export const getContacts = async ({ perPage, page, sortBy = "_id", sortOrder = S
     contactQuery = contactQuery.where('isFavourite').equals(filter.isFavourite);
     }
     if (filter.userId) {
-        contactQuery.where("userId").eq(filter.userId);
+        contactQuery.where("userId").equals(filter.userId);
     }
 
     
