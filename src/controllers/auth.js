@@ -25,6 +25,8 @@ export const registerController = async (req, res) => {
     export const loginController = async (req, res) => {
         const session = await authServices.login(req.body);
 
+        setupSession(res, session);
+
         res.json({
             status: 200,
             message: "Successfully signin",
