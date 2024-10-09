@@ -1,31 +1,17 @@
 import nodemailer from "nodemailer";
-import "dotenv/config";
+import {SMTP} from "../constans/index.js";
+import {env} from "./env.js";
 
-const {
-  SMTP_HOST,
-  SMTP_PORT,
-  SMTP_USER,
-  SMTP_PASSWORD,
-  SMTP_FROM
-} = process.env;
+const transporter = nodemailer.createTransport({
+    host: env(SMTP.SMTP_HOST),
+    port: Number(env(SMTP.SMTP_PORT)),
+    auth: {
+        user: env(SMTP.SMTP_USER),
+        pass: env(SMTP.SMTP_PASSWORD),
+    },
+});
 
-let configOptions = {
-  host: SMTP_HOST,
-  port: SMTP_PORT,
-  auth: {
-    user: SMTP_USER,
-    pass: SMTP_PASSWORD,
-  }
+export const sendEmail = async (options) => {
+  return transporter.sendMail(options);
+
 };
-
-const transport = nodemailer.createTransport(configOptions);
-
-const sendEmail = data => {
-  const email = {
-    ...data,
-    from: SMTP_FROM
-  };
-  return transport.sendEmail(email);
-};
-
-export default sendEmail;
