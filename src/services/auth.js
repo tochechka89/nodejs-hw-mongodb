@@ -7,7 +7,7 @@ import handlebars from "handlebars";
 import * as path from "node:path";
 import * as fs from "node:fs/promises";
 
-import {SMTP} from "../constans/index.js";
+import {SMTP} from "../constants/index.js";
 import { env } from '../utils/env.js';
 import jwt from "jsonwebtoken";
 import { sendEmail } from '../utils/sendMail.js';
