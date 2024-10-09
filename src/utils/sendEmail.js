@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import {SMTP} from "../constans/index.js";
+import {SMTP} from "../constants/index.js";
 import {env} from "./env.js";
 
 const transporter = nodemailer.createTransport({
@@ -12,6 +12,6 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendEmail = async (options) => {
-  return transporter.sendMail(options);
+  return transporter.sendEmail(options);
 
 };
