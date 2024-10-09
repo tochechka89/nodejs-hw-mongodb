@@ -26,11 +26,15 @@ const contactSchema = new Schema({
         required: true,
         default: ["personal"],
     },
+    photo: {
+        type: String
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: "user",
         required: true,
     }
+     
 }, { versionKey: false, timestamps: true });
 
 contactSchema.post("save", handleSaveError);
