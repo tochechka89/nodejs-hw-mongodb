@@ -25,7 +25,7 @@ const sendEmail = data => {
     ...data,
     from: SMTP_FROM
   };
-  return transport.sendMail(email);
+  return transport.sendEmail(email);
 };
 
 export default sendEmail;

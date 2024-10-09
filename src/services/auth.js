@@ -10,7 +10,7 @@ import * as fs from "node:fs/promises";
 import {SMTP} from "../constants/index.js";
 import { env } from '../utils/env.js';
 import jwt from "jsonwebtoken";
-import { sendEmail } from '../utils/sendMail.js';
+import { sendEmail } from '../utils/sendEmail.js';
 
 import SessionCollection from "../db/models/Session.js";
 import UserCollection from "../db/models/User.js";
