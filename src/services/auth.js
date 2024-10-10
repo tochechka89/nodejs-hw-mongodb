@@ -20,7 +20,6 @@ import { accessTokenLifeTime, refreshTokenLifeTime } from "../constants/users.js
 import { TEMPLATES_DIR } from "../constants/index.js";
 
 const resetPasswordEmailPath = path.join(TEMPLATES_DIR, "reset-password-email.html");
-const resetPasswordEmailTemplateSource = await fs.readFile(resetPasswordEmailPath, "utf-8");
 
 const appDomain = env("APP_DOMAIN");
 console.log(appDomain);
@@ -164,7 +163,7 @@ export const requestResetToken = async (email) => {
 );
 
     const templateSource = (
-        await fs.readFile(resetPasswordEmailTemplateSource)
+        await fs.readFile(resetPasswordEmailPath)
     ).toString();
 
     const template = handlebars.compile(templateSource);
