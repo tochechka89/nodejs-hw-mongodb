@@ -1,8 +1,8 @@
 tags:
   - Contacts
-summary: Create new contact
+summary: Create contact
 operationId: createContact
-description: 'Create a new contact with payload'
+description: 'Create a contact with payload'
 security:
   - bearerAuth: []
 requestBody:
@@ -13,7 +13,7 @@ requestBody:
         required:
           - name
           - phoneNumber
-          - isFavorite
+          - email
           - contactType
           - userId
         properties:
@@ -24,20 +24,21 @@ requestBody:
           phoneNumber:
             description: "Contact's phone number"
             type: number
-            example: '+380998787654'
-          isFavorite:
-            description: 'Is contact a favorite?'
-            type: boolean
+            example: +380998765432
+          email:
+            description: "Contact's email"
+            type: string
+            example: mail@mail.com
           contactType:
             description: "Contact's type"
             type: string
-            enum: ['work', 'home', 'person']
-          usertId:
-            description: "Contact's user id"
-            type: string
-            example: 65e4decdd286b30065d54af9
+            enum: ['personal']
+          isFavourite:
+            description: "Contact's check for favourite"
+            type: boolean
+            example: false
           photo:
-            description: "Contact's photo"
+            description: "Link to Contact's photo"
             type: string
             format: binary
 responses:
@@ -60,6 +61,6 @@ responses:
               example: Successfully created a contact!
             data:
               type: object
-              $ref: '../../components/schemas/contact.yaml'
+              $ref: ..\..\components\schemas\contact.yaml
   '401':
     $ref: '../../components/responses/401.yaml'
